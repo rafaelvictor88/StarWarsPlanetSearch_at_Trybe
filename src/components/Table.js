@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 import TableHeader from './TableHeader';
+import NumericFilters from './NumericFilters';
 
 const Table = () => {
   const { data } = useContext(MyContext);
@@ -20,7 +21,7 @@ const Table = () => {
 
   useEffect(() => {
     const filterPlanetsByName = data
-      .filter((planet) => planet.name.includes(filters.filterByName.name));
+      .filter((planet) => planet.name.toLowerCase().includes(filters.filterByName.name));
     setDataClone(filterPlanetsByName);
   }, [filters]);
 
@@ -33,6 +34,7 @@ const Table = () => {
         onChange={ handleChangeInputName }
         placeholder="pesquise pelo nome"
       />
+      <NumericFilters />
       <table>
         <TableHeader />
         <tbody>
