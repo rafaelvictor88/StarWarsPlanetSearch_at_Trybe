@@ -1,41 +1,70 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import MyContext from '../context/MyContext';
+import TableHeader from './TableHeader';
 
 const Table = () => {
-  const contextValue = useContext(MyContext);
-  console.log(contextValue, 'primeiro');
-  const tableValues = contextValue.data;
-  console.log(tableValues, 'segundo');
+  const { data, setData } = useContext(MyContext);
+  // const tableValues = contextValue.data;
+  const [filters, setFilters] = useState({});
+  const [dataClone, setDataClone] = useState([]);
 
-  if (tableValues[0] === undefined) {
-    return <p>Carrengando</p>;
-  } const makeHeaderTable = Object.keys(tableValues[0])
-    .filter((header) => (header !== 'residents'))
-    .map((header) => <th key={ header }>{ header }</th>);
+  const handleChangeInputName = ({ target }) => {
+    const inputNameValue = target.value;
+    setFilters({ filterByName: {
+      name: inputNameValue },
+    });
+  };
+
+  useEffect(() => {
+    setDataClone(data);
+  }, [data]);
+
+  useEffect(() => {
+    // const { filterByName: { name } } = filters;
+    // console.log(name, 'name');
+    console.log(data);
+    // (!data.length) ? <p>Carrengando</p>
+    const filterPlanetsByName = data
+      .filter((planet) => planet.name.includes(filters.filterByName.name));
+    setDataClone(filterPlanetsByName);
+  }, [filters]);
 
   return (
     <div>
+      <input
+        type="text"
+        name="name-filter"
+        data-testid="name-filter"
+        onChange={ handleChangeInputName }
+        placeholder="pesquise pelo nome"
+      />
       <table>
-        <tr>
-          { makeHeaderTable }
-        </tr>
+        <TableHeader />
         <tbody>
-          { (!tableValues.length) ? <p>Carrengando</p> : tableValues
-            .map((value) => (
-              <tr key={ value.key }>
-                <td>{ value.name }</td>
-                <td>{ value.orbital_period }</td>
-                <td>{ value.diameter }</td>
-                <td>{ value.climate }</td>
-                <td>{ value.gravity }</td>
-                <td>{ value.terrain }</td>
-                <td>{ value.surface_water }</td>
-                <td>{ value.population }</td>
-                <td>{ value.films }</td>
-                <td>{ value.created }</td>
-                <td>{ value.edited }</td>
-                <td>{ value.url }</td>
-                <td>{ value.rotation_period }</td>
+          { (!dataClone.length) ? <p>Carrengando</p> : dataClone
+            .map(({
+              key,
+              name: PlanetName,
+              orbital_period: OrbitalPeriod,
+              rotation_period: RotationPeriod,
+              diameter, climate, gravity, terrain,
+              surface_water: SurfaceWater,
+              population, films, created, edited, url,
+            }) => (
+              <tr key={ key }>
+                <td>{ PlanetName }</td>
+                <td>{ OrbitalPeriod }</td>
+                <td>{ RotationPeriod }</td>
+                <td>{ diameter }</td>
+                <td>{ climate }</td>
+                <td>{ gravity }</td>
+                <td>{ terrain }</td>
+                <td>{ SurfaceWater }</td>
+                <td>{ population }</td>
+                <td>{ films }</td>
+                <td>{ created }</td>
+                <td>{ edited }</td>
+                <td>{ url }</td>
               </tr>
             ))}
         </tbody>

@@ -4,7 +4,7 @@ import MyContext from './MyContext';
 import fetchPlanetsApi from '../services/PlanetsApi';
 
 const Provider = ({ children }) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     fetchPlanetsApi()
@@ -14,7 +14,7 @@ const Provider = ({ children }) => {
   }, []);
 
   return (
-    <MyContext.Provider value={ { data } }>
+    <MyContext.Provider value={ { data, setData } }>
       {children}
     </MyContext.Provider>
   );
