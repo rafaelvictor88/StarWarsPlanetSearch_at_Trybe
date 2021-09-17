@@ -3,8 +3,7 @@ import MyContext from '../context/MyContext';
 import TableHeader from './TableHeader';
 
 const Table = () => {
-  const { data, setData } = useContext(MyContext);
-  // const tableValues = contextValue.data;
+  const { data } = useContext(MyContext);
   const [filters, setFilters] = useState({});
   const [dataClone, setDataClone] = useState([]);
 
@@ -20,10 +19,6 @@ const Table = () => {
   }, [data]);
 
   useEffect(() => {
-    // const { filterByName: { name } } = filters;
-    // console.log(name, 'name');
-    console.log(data);
-    // (!data.length) ? <p>Carrengando</p>
     const filterPlanetsByName = data
       .filter((planet) => planet.name.includes(filters.filterByName.name));
     setDataClone(filterPlanetsByName);
