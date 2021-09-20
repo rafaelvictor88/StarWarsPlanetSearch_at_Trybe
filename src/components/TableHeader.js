@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import MyContext from '../context/MyContext';
+import PlanetContext from '../context/PlanetContext';
 
-const TableHeader = () => {
-  const contextValue = useContext(MyContext);
+function TableHeader() {
+  const contextValue = useContext(PlanetContext);
   const tableValues = contextValue.data;
 
   if (tableValues[0] === undefined) {
@@ -13,11 +13,12 @@ const TableHeader = () => {
 
   return (
     <div>
+      <p>Table header</p>
       <tr>
         { makeHeaderTable }
       </tr>
     </div>
   );
-};
+}
 
 export default TableHeader;
