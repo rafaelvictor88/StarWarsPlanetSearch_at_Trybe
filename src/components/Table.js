@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Table() {
-  const { data, filters } = useContext(PlanetContext);
-  const [dataClone, setDataClone] = useState([]);
+  const { data, filters, dataClone, setDataClone } = useContext(PlanetContext);
 
   useEffect(() => {
     setDataClone(data);
