@@ -4,17 +4,30 @@ import PlanetContext from './PlanetContext';
 import planetsFetchApi from '../services/planetsFetch';
 
 function PlanetProvider({ children }) {
-  const [state, setState] = useState();
+  const INITIAL_STATE = {
+    data: [],
+    filters: {
+      filterByName: {
+        name: 'Tatoo',
+      },
+      filterByNumericValues: [],
+      order: {
+        column: 'name',
+        sort: 'ASC',
+      },
+    },
+  };
+  const [state, setState] = useState(INITIAL_STATE);
 
   useEffect(() => {
-    console.log(planetsFetchApi(), 'retorno no provider');
+    planetsFetchApi(setState);
   }, []);
 
   const context = {
     state,
   };
 
-  console.log(state);
+  console.log(state, 'retorno depois de setar o state');
 
   return (
     <PlanetContext.Provider value={ context }>
