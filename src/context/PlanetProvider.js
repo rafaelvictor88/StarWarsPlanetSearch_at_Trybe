@@ -8,7 +8,7 @@ function PlanetProvider({ children }) {
     data: [],
     filters: {
       filterByName: {
-        name: 'Tatoo',
+        name: '',
       },
       filterByNumericValues: [],
       order: {
@@ -25,6 +25,7 @@ function PlanetProvider({ children }) {
 
   const context = {
     state,
+    setState,
   };
 
   // console.log(state, 'retorno depois de setar o state');
