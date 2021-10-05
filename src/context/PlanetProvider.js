@@ -27,7 +27,7 @@ function PlanetProvider({ children }) {
     state,
   };
 
-  console.log(state, 'retorno depois de setar o state');
+  // console.log(state, 'retorno depois de setar o state');
 
   return (
     <PlanetContext.Provider value={ context }>
