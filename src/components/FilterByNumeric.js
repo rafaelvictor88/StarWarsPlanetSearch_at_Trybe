@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function FilterByNumeric() {
-  const { setState,
+  const { setState, state,
     state: { filters: { filterByNumericValues } } } = useContext(PlanetContext);
+  const [options, setOptions] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   // Função criada para setar o Estado FilterByNumericValues no Estado global da aplicação,
   // também remove o valor do filtro escolhido para não ser utilizado novamente;
@@ -24,19 +26,41 @@ function FilterByNumeric() {
           }],
       },
     }));
-    document.getElementById(columnValue).remove();
+    // document.getElementById(columnValue).remove();
+    setOptions(
+      options.filter((option) => option !== columnValue),
+    );
   };
 
-  console.log(filterByNumericValues[0]);
+  // Função criada com a ajuda do Rogério P. da Silva;
+  const handleClickRemoveFilter = (event) => {
+    setOptions([
+      ...options,
+      event.target.id,
+    ]);
+    setState({
+      ...state,
+      filters: {
+        ...state.filters,
+        filterByNumericValues: filterByNumericValues
+          .filter((filter) => filter.column !== event.target.id),
+      },
+    });
+  };
 
   return (
     <div>
-      <select className="column-filter" data-testid="column-filter">
-        <option id="population" value="population">population</option>
-        <option id="orbital_period" value="orbital_period">orbital_period</option>
-        <option id="diameter" value="diameter">diameter</option>
-        <option id="rotation_period" value="rotation_period">rotation_period</option>
-        <option id="surface_water" value="surface_water">surface_water</option>
+      <select id="column-filter" className="column-filter" data-testid="column-filter">
+        {options
+          .map((option) => (
+            <option
+              key={ option }
+              id={ option }
+              value={ option }
+            >
+              { option }
+            </option>
+          ))}
       </select>
       <select className="comparison-filter" data-testid="comparison-filter">
         <option value="maior que">maior que</option>
@@ -55,18 +79,29 @@ function FilterByNumeric() {
       >
         Filtrar
       </button>
-      {/* <div>
-        {Object.keys(filterByNumericValues[0]).length
-          ? null
-          : filterByNumericValues.map(({ column, comparison, value }) => (
-            <div key={ column } data-testid="filter">
-              <span>{ column }</span>
-              <span>{ comparison }</span>
-              <span>{ value }</span>
-              <button type="button">x</button>
-            </div>
-          ))}
-      </div> */}
+      <div>
+        {!filterByNumericValues.length
+          ? <p>nenhum filtro utilizado</p>
+          : filterByNumericValues.map(({ column, comparison, value }, index) => {
+            if (column) {
+              return (
+                <li id={ `${column}-index` } key={ index } data-testid="filter">
+                  <span>{ column }</span>
+                  <span>{ comparison }</span>
+                  <span>{ value }</span>
+                  <button
+                    id={ column }
+                    type="button"
+                    onClick={ handleClickRemoveFilter }
+                  >
+                    X
+                  </button>
+                </li>
+              );
+            }
+            return null;
+          })}
+      </div>
     </div>
   );
 }

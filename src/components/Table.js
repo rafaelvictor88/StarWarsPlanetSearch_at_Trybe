@@ -49,6 +49,8 @@ function Table() {
       : data
         .filter((planet) => planet.name.includes(name.toLowerCase()))
         .filter((planet) => {
+          if (!filterByNumericValues.length) return planet;
+          // return filterByNumericValues.map((filter) => {
           const {
             column,
             comparison,
@@ -57,13 +59,13 @@ function Table() {
           case 'maior que':
             return Number(planet[column]) > Number(value);
           case 'menor que':
-            console.log(planet[column], column, planet, value);
             return Number(planet[column]) < Number(value);
           case 'igual a':
             return Number(value) === Number(planet[column]);
           default:
             return planet;
           }
+          // });
         })
         .map((planet, index) => (
           <tr key={ index }>

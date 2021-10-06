@@ -10,7 +10,7 @@ function PlanetProvider({ children }) {
       filterByName: {
         name: '',
       },
-      filterByNumericValues: [{}],
+      filterByNumericValues: [],
       order: {
         column: 'name',
         sort: 'ASC',
