@@ -4,12 +4,13 @@ import PlanetContext from '../context/PlanetContext';
 // import './css/table.css';
 
 function Table() {
-  const { state: { data } } = useContext(PlanetContext);
-
-  // console.log(data, 'data no Table');
+  const {
+    state: { data,
+      filters: {
+        filterByName: { name }, filterByNumericValues } } } = useContext(PlanetContext);
 
   const tableHeader = () => (
-    data.length === 0
+    (!data.length)
       ? 'carregando'
       : (
         <tr>
@@ -19,26 +20,64 @@ function Table() {
       )
   );
 
+  // const handleFilterByNumericValues = (planet) => {
+  //   if (!filterByNumericValues.length) return;
+  //   const {
+  //     column,
+  //     comparison,
+  //     value } = filterByNumericValues[filterByNumericValues.length - 1];
+  //   switch (comparison) {
+  //   case 'maior que':
+  //     return Number(planet[column]) > Number(value);
+  //   case 'menor que':
+  //     return Number(planet[column]) < Number(value);
+  //   case 'igual a':
+  //     console.log(value, planet[column]);
+  //     return Number(value) === Number(planet[column]);
+  //   default:
+  //     return planet;
+  //   }
+  // };
+
   const tableBody = () => (
-    data.length === 0
+    (!data.length)
       ? 'carregando'
-      : data.map((planet, index) => (
-        <tr key={ index }>
-          <td>{ planet.name }</td>
-          <td>{ planet.rotation_period }</td>
-          <td>{ planet.orbital_period }</td>
-          <td>{ planet.diameter }</td>
-          <td>{ planet.climate }</td>
-          <td>{ planet.gravity }</td>
-          <td>{ planet.terrain }</td>
-          <td>{ planet.surface_water }</td>
-          <td>{ planet.population }</td>
-          <td>{ planet.films }</td>
-          <td>{ planet.created }</td>
-          <td>{ planet.edited }</td>
-          <td>{ planet.url }</td>
-        </tr>
-      ))
+      : data
+        .filter((planet) => planet.name.includes(name.toLowerCase()))
+        .filter((planet) => {
+          const {
+            column,
+            comparison,
+            value } = filterByNumericValues[filterByNumericValues.length - 1];
+          switch (comparison) {
+          case 'maior que':
+            return Number(planet[column]) > Number(value);
+          case 'menor que':
+            console.log(planet[column], column, planet, value);
+            return Number(planet[column]) < Number(value);
+          case 'igual a':
+            return Number(value) === Number(planet[column]);
+          default:
+            return planet;
+          }
+        })
+        .map((planet, index) => (
+          <tr key={ index }>
+            <td>{ planet.name }</td>
+            <td>{ planet.rotation_period }</td>
+            <td>{ planet.orbital_period }</td>
+            <td>{ planet.diameter }</td>
+            <td>{ planet.climate }</td>
+            <td>{ planet.gravity }</td>
+            <td>{ planet.terrain }</td>
+            <td>{ planet.surface_water }</td>
+            <td>{ planet.population }</td>
+            <td>{ planet.films }</td>
+            <td>{ planet.created }</td>
+            <td>{ planet.edited }</td>
+            <td>{ planet.url }</td>
+          </tr>
+        ))
   );
 
   return (

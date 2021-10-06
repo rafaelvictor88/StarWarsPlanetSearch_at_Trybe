@@ -8,12 +8,12 @@ function FilterByName() {
     setState((prevState) => ({
       ...prevState,
       filters: {
+        ...prevState.filters,
         filterByName: {
           name: target.value,
         },
       },
     }));
-    console.log(target.value);
   };
 
   return (

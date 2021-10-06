@@ -10,7 +10,7 @@ function PlanetProvider({ children }) {
       filterByName: {
         name: '',
       },
-      filterByNumericValues: [],
+      filterByNumericValues: [{}],
       order: {
         column: 'name',
         sort: 'ASC',
@@ -27,8 +27,6 @@ function PlanetProvider({ children }) {
     state,
     setState,
   };
-
-  // console.log(state, 'retorno depois de setar o state');
 
   return (
     <PlanetContext.Provider value={ context }>
