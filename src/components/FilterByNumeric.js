@@ -2,7 +2,11 @@ import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function FilterByNumeric() {
-  const { setState } = useContext(PlanetContext);
+  const { setState,
+    state: { filters: { filterByNumericValues } } } = useContext(PlanetContext);
+
+  // Função criada para setar o Estado FilterByNumericValues no Estado global da aplicação,
+  // também remove o valor do filtro escolhido para não ser utilizado novamente;
   const handleClickNumericFilter = () => {
     const columnValue = document.querySelector('.column-filter').value;
     const comparisonValue = document.querySelector('.comparison-filter').value;
@@ -20,16 +24,19 @@ function FilterByNumeric() {
           }],
       },
     }));
+    document.getElementById(columnValue).remove();
   };
+
+  console.log(filterByNumericValues[0]);
 
   return (
     <div>
       <select className="column-filter" data-testid="column-filter">
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        <option id="population" value="population">population</option>
+        <option id="orbital_period" value="orbital_period">orbital_period</option>
+        <option id="diameter" value="diameter">diameter</option>
+        <option id="rotation_period" value="rotation_period">rotation_period</option>
+        <option id="surface_water" value="surface_water">surface_water</option>
       </select>
       <select className="comparison-filter" data-testid="comparison-filter">
         <option value="maior que">maior que</option>
@@ -48,6 +55,18 @@ function FilterByNumeric() {
       >
         Filtrar
       </button>
+      {/* <div>
+        {Object.keys(filterByNumericValues[0]).length
+          ? null
+          : filterByNumericValues.map(({ column, comparison, value }) => (
+            <div key={ column } data-testid="filter">
+              <span>{ column }</span>
+              <span>{ comparison }</span>
+              <span>{ value }</span>
+              <button type="button">x</button>
+            </div>
+          ))}
+      </div> */}
     </div>
   );
 }

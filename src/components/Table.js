@@ -9,6 +9,7 @@ function Table() {
       filters: {
         filterByName: { name }, filterByNumericValues } } } = useContext(PlanetContext);
 
+  // Função que cria o cabeçalho da tabela;
   const tableHeader = () => (
     (!data.length)
       ? 'carregando'
@@ -19,6 +20,8 @@ function Table() {
         </tr>
       )
   );
+
+  // Função criada a princípio para fazer o Switch casa, refatorada com ajuda do Rogério P da Silva;
 
   // const handleFilterByNumericValues = (planet) => {
   //   if (!filterByNumericValues.length) return;
@@ -39,6 +42,7 @@ function Table() {
   //   }
   // };
 
+  // Função cria o corpo da tabela, também executa os filtros por nome e por valores numéricos;
   const tableBody = () => (
     (!data.length)
       ? 'carregando'

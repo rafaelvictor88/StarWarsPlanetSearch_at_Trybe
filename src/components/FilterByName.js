@@ -4,6 +4,7 @@ import PlanetContext from '../context/PlanetContext';
 function FilterByName() {
   const { setState } = useContext(PlanetContext);
 
+  // Função criada para setar o Estado FilterByName no Estado global da aplicação;
   const handleNameFilter = ({ target }) => {
     setState((prevState) => ({
       ...prevState,
