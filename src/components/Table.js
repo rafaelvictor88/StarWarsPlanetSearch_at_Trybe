@@ -7,7 +7,8 @@ function Table() {
   const {
     state: { data,
       filters: {
-        filterByName: { name }, filterByNumericValues } } } = useContext(PlanetContext);
+        filterByName: { name }, filterByNumericValues,
+        order: { column: coluna, sort } } } } = useContext(PlanetContext);
 
   // Função que cria o cabeçalho da tabela;
   const tableHeader = () => (
@@ -47,10 +48,16 @@ function Table() {
     (!data.length)
       ? 'carregando'
       : data
+        .map((planet) => planet)
+        .sort((a, b) => {
+          if (coluna === 'name' && sort === 'ASC') {
+            return a.name < b.name;
+          }
+          return a.name > b.name;
+        })
         .filter((planet) => planet.name.includes(name.toLowerCase()))
         .filter((planet) => {
           if (!filterByNumericValues.length) return planet;
-          // return filterByNumericValues.map((filter) => {
           const {
             column,
             comparison,
@@ -65,11 +72,10 @@ function Table() {
           default:
             return planet;
           }
-          // });
         })
         .map((planet, index) => (
           <tr key={ index }>
-            <td>{ planet.name }</td>
+            <td data-testid="planet-name">{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
             <td>{ planet.orbital_period }</td>
             <td>{ planet.diameter }</td>
