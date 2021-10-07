@@ -41,6 +41,7 @@ function FilterByOrder() {
         ASC
         <input
           onChange={ handleChange }
+          data-testid="column-sort-input-asc"
           id="radio-button-ASC"
           type="radio"
           value="ASC"
@@ -52,6 +53,7 @@ function FilterByOrder() {
         DESC
         <input
           onChange={ handleChange }
+          data-testid="column-sort-input-desc"
           id="radio-button-DESC"
           type="radio"
           value="DESC"

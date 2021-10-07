@@ -22,7 +22,7 @@ function Table() {
       )
   );
 
-  // Função criada a princípio para fazer o Switch casa, refatorada com ajuda do Rogério P da Silva;
+  // Função criada a princípio para fazer o Switch case, refatorada com ajuda do Rogério P da Silva;
 
   // const handleFilterByNumericValues = (planet) => {
   //   if (!filterByNumericValues.length) return;
@@ -51,9 +51,11 @@ function Table() {
         .map((planet) => planet)
         .sort((a, b) => {
           if (coluna === 'name' && sort === 'ASC') {
-            return a.name < b.name;
-          }
-          return a.name > b.name;
+            return a[coluna].localeCompare(b[coluna]);
+          } return b[coluna].localeCompare(a[coluna]);
+          // if (coluna === 'population' && sort === 'ASC') {
+          //   return a.coluna - b.coluna;
+          // } return b.coluna - a.coluna;
         })
         .filter((planet) => planet.name.includes(name.toLowerCase()))
         .filter((planet) => {
