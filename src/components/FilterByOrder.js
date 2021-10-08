@@ -8,8 +8,8 @@ function FilterByOrder() {
     sort: 'ASC',
   });
 
+  // Função para pegar o target.value dos inputs e setar o estado do componente;
   const handleChange = ({ target }) => {
-    console.log(target);
     if (target.id === 'radio-button-ASC') {
       target.checked = true;
     }
@@ -19,6 +19,7 @@ function FilterByOrder() {
     });
   };
 
+  // Função que, após o click, pega o valor do estado local setar o estado geral e realizar a organizção.
   const handleClick = () => {
     setState((prevState) => ({
       ...prevState,
@@ -35,6 +36,10 @@ function FilterByOrder() {
       <select onChange={ handleChange } name="column" data-testid="column-sort">
         <option value="name">name</option>
         <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
       </select>
       <br />
       <label htmlFor="radio-button-ASC">

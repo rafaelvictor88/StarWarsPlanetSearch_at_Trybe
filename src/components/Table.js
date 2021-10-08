@@ -22,6 +22,23 @@ function Table() {
       )
   );
 
+  // Função criada a partir do código do Matheus Duarte;
+  // https://github.com/tryber/sd-013-a-project-starwars-planets-search/pull/122/files
+  const tableSort = () => {
+    switch (sort) {
+    case 'ASC':
+      return data
+        .sort(({ [coluna]: a }, { [coluna]: b }) => a.localeCompare(b))
+        .sort((a, b) => (a[coluna] - b[coluna]));
+    case 'DESC':
+      return data
+        .sort(({ [coluna]: a }, { [coluna]: b }) => b.localeCompare(a))
+        .sort((a, b) => b[coluna] - a[coluna]);
+    default:
+      return data;
+    }
+  };
+
   // Função criada a princípio para fazer o Switch case, refatorada com ajuda do Rogério P da Silva;
 
   // const handleFilterByNumericValues = (planet) => {
@@ -47,16 +64,7 @@ function Table() {
   const tableBody = () => (
     (!data.length)
       ? 'carregando'
-      : data
-        .map((planet) => planet)
-        .sort((a, b) => {
-          if (coluna === 'name' && sort === 'ASC') {
-            return a[coluna].localeCompare(b[coluna]);
-          } return b[coluna].localeCompare(a[coluna]);
-          // if (coluna === 'population' && sort === 'ASC') {
-          //   return a.coluna - b.coluna;
-          // } return b.coluna - a.coluna;
-        })
+      : tableSort()
         .filter((planet) => planet.name.includes(name.toLowerCase()))
         .filter((planet) => {
           if (!filterByNumericValues.length) return planet;
@@ -107,3 +115,12 @@ function Table() {
 }
 
 export default Table;
+
+// const one = 'Muriloooo';
+// const two = 2;
+
+// if (one > two) {
+//   console.log('Murilo maior que Rafael');
+// } else {
+//   console.log('Rafael maior que Murilo');
+// }

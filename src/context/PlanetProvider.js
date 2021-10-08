@@ -4,6 +4,7 @@ import PlanetContext from './PlanetContext';
 import planetsFetchApi from '../services/planetsFetch';
 
 function PlanetProvider({ children }) {
+  // Estado global;
   const INITIAL_STATE = {
     data: [],
     filters: {
@@ -19,6 +20,7 @@ function PlanetProvider({ children }) {
   };
   const [state, setState] = useState(INITIAL_STATE);
 
+  // ComponentDidMount para setar o estado global com os dados do fetch;
   useEffect(() => {
     planetsFetchApi(setState);
   }, []);
