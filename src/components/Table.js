@@ -115,12 +115,3 @@ function Table() {
 }
 
 export default Table;
-
-// const one = 'Muriloooo';
-// const two = 2;
-
-// if (one > two) {
-//   console.log('Murilo maior que Rafael');
-// } else {
-//   console.log('Rafael maior que Murilo');
-// }
