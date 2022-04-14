@@ -1,16 +1,19 @@
 import React from 'react';
-import './App.css';
-import Filters from './components/Filters';
-import Table from './components/Table';
-import TableHeader from './components/TableHeader';
+
 import PlanetProvider from './context/PlanetProvider';
+import Table from './components/Table';
+import Header from './components/Header';
+import FilterByName from './components/FilterByName';
+import FilterByNumeric from './components/FilterByNumeric';
+import FilterByOrder from './components/FilterByOrder';
 
 function App() {
   return (
     <PlanetProvider>
-      <h1>Search for a planet from StarWars World</h1>
-      <Filters />
-      <TableHeader />
+      <Header />
+      <FilterByName />
+      <FilterByOrder />
+      <FilterByNumeric />
       <Table />
     </PlanetProvider>
   );
